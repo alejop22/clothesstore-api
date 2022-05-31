@@ -1,0 +1,16 @@
+{
+  "name": "clothesstore-api",
+  "version": "1.0.0",
+  "description": "api de la compañia Clothesstore",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Node",
+    "JavaScript",
+    "API"
+  ],
+  "author": "Alejandro Palacio <alejandrooss94@gmail.com>",
+  "license": "MIT"
+}
