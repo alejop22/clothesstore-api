@@ -3,7 +3,14 @@
 API para la compañía ficticia Clothesstore.
 Hecha en node con express para exponer los endpoints, junto con la librería multer para recibir las imágenes y sharp para la reescalación de las mismas; también se usa supertest, chai y mocha para los test unitarios. Desplegada en Heroku.
 
-### instructuvo para correr el proyecto:
+## instructuvo para correr el proyecto:
+
+### IMPORTANTE:
+Se debe crear un archivo .env  y agregarle las siguientes variables de entorno:
+- __PORT__ para que el puerto sea dinámico
+- __CLOUD_PRESET__ es la key que entrega Cloudinary para hacer la petición y subir las imágenes a su servidor
+
+Luego de esto ingresar los siguientes comandos en la raíz de la app:
 
 `$ npm install`
 
@@ -13,7 +20,7 @@ Hecha en node con express para exponer los endpoints, junto con la librería mul
 
 # Documentación de la API
 ----
-> En local el servidor corre en el puerto 3000
+
 
 ### Obtener los productos favoritos ruta GET:
 
