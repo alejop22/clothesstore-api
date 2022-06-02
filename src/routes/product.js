@@ -17,6 +17,8 @@ router.post('/', imgs, async (req, res) => {
     try {
         if (!name || !description || !price || !discount || !country || !img_front || !img_back) {
             throw {error: 'Peticion invalida, faltan datos'}
+        } else if (!/^[0-9]*(\.?)[ 0-9\s]+$/.test(price) || !/^[0-9]*(\.?)[ 0-9\s]+$/.test(discount)) {
+            throw {error: 'Datos invalidos'}
         }
             country = country.charAt(0).toUpperCase() + country.slice(1);
             price = price*1;
@@ -24,6 +26,8 @@ router.post('/', imgs, async (req, res) => {
 
         if(!/^[A-Z]+$/i.test(country) || country.length <= 2) {
             throw {error: 'Pais no valido'}
+        } else if (discount < 0 || price <= 0) {
+            throw {error: 'Datos invalidos'}
         }
         else if (discount > 50 && country === 'Colombia' || country === 'Mexico') {
             throw {error: 'Peticion invalida, descuento demasiado alto para el país'}
@@ -52,6 +56,38 @@ router.post('/', imgs, async (req, res) => {
         products.push(auxObj);
         
         res.status(201).json(auxObj);
+
+    } catch (error) {
+        res.status(400).json(error);
+    }
+});
+
+router.put('/update/:id', (req, res) => {
+    const {id} = req.params;
+    const {price, discount} = req.body;
+
+    try {
+        if (!price || !discount) {
+            throw {error: 'Peticion invalida, faltan datos'}
+        } else if (price <= 0 || discount < 0) {
+            throw {error: 'Datos invalidos'}
+        }
+
+        const productUpdate = products.find(product => product.id === (id*1));
+
+        if (!productUpdate) {
+            throw {error: `El producto ${id} no existe`}
+        }
+
+        for (const i of products) {
+            if (i.id === (id*1)) {
+                i.price = price;
+                i.discount = discount;
+            }    
+        }
+
+        const status = {status: 200, description: `El producto ${id} se actualizo correctamente`}
+        res.json(status);
 
     } catch (error) {
         res.status(400).json(error);

@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
         }
 
         const favProducts = [];
-
+        console.log(products);
         for (const i of products) {
             const auxObj = {
                 id: i.id,
