@@ -3,7 +3,7 @@ const router = express.Router();
 const products = require('../db.js');
 const multer = require('multer');
 const fs = require('fs');
-const { processImgs, postImgs, idGenerator } = require('../helpers');
+const { processImgs, postImgs, idGenerator,removeImgs } = require('../helpers');
 
 const uploadImgs = multer({storage: multer.memoryStorage()});
 const objGenerator = idGenerator();
@@ -22,32 +22,31 @@ router.post('/', imgs, async (req, res) => {
             price = price*1;
             discount = discount*1;
 
-        if (discount > 50 && country === 'Colombia' || country === 'Mexico') {
+        if(!/^[A-Z]+$/i.test(country) || country.length <= 2) {
+            throw {error: 'Pais no valido'}
+        }
+        else if (discount > 50 && country === 'Colombia' || country === 'Mexico') {
             throw {error: 'Peticion invalida, descuento demasiado alto para el país'}
         } else if (discount > 30 && country === 'Chile' || country === 'Peru') {
             throw {error: 'Peticion invalida, descuento demasiado alto para el país'}
         }
 
         if (img_front[0].size >= 1000000) {
-            processImgs(img_front[0].buffer, 'front')
+            await processImgs(img_front[0].buffer, 'front')
         } else {
-            console.log('log 1');
             fs.writeFileSync('assets/frontImg.jpg', img_front[0].buffer);
         }
-
         if (img_back[0].size >= 1000000) {
-            processImgs(img_back[0].buffer, 'back')
+            await processImgs(img_back[0].buffer, 'back')
         } else {
-            console.log('log 2');
             fs.writeFileSync('assets/backImg.jpg', img_back[0].buffer);
         }
-        
-        console.log('log 3');
+
         const urlImgFront = await postImgs('front');
         const urlImgBack = await postImgs('back');
         const imgList = [{urlImgFront},{urlImgBack}];
 
-        console.log('7');
+        removeImgs();
 
         const auxObj = {id:objGenerator.next().value, name,description, price, discount, imgList, country}
         products.push(auxObj);

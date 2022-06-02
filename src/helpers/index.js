@@ -24,18 +24,15 @@ module.exports = {
 
     // Este metodo realiza la peticion a Cloudinary para guardar la imagen en sus servidores
     postImgs: async (imgType) => {
-        console.log('4');
-        console.log(CLOUD_PRESET);
         const formData = new FormData();
         formData.append('upload_preset', CLOUD_PRESET);
-        console.log('5');
+
         if (imgType === 'front') {
             formData.append('file', fs.createReadStream('assets/frontImg.jpg'));
         } else {
             formData.append('file', fs.createReadStream('assets/backImg.jpg'));
         }
 
-        console.log('5');
         const config = {
             method: 'POST',
             url: cloudUrl,
@@ -44,7 +41,6 @@ module.exports = {
             },
             data: formData
         };
-        console.log('6');
         try {
             const rs = await axios(config);
             if (rs.status !== 200) {
@@ -62,6 +58,19 @@ module.exports = {
         while (true) {
             yield id;
             id++
+        }
+    },
+
+    removeImgs: () => {
+        const files = ['assets/frontImg.jpg','assets/backImg.jpg'];
+
+        for (const i of files) {
+            try {
+                fs.unlinkSync(i)
+                console.log('Se elimono la imagen');
+            } catch (error) {
+                console.log(`Algo salio mal ${error}`)
+            }
         }
     }
 }
