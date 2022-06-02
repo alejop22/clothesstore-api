@@ -24,6 +24,7 @@ module.exports = {
 
     // Este metodo realiza la peticion a Cloudinary para guardar la imagen en sus servidores
     postImgs: async (imgType) => {
+        console.log('4');
         const formData = new FormData();
         formData.append('upload_preset', CLOUD_PRESET);
         if (imgType === 'front') {
@@ -32,6 +33,7 @@ module.exports = {
             formData.append('file', fs.createReadStream('assets/backImg.jpg'));
         }
 
+        console.log('5');
         const config = {
             method: 'POST',
             url: cloudUrl,
@@ -40,7 +42,7 @@ module.exports = {
             },
             data: formData
         };
-
+        console.log('6');
         try {
             const rs = await axios(config);
             if (rs.status !== 200) {

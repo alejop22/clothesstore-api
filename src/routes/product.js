@@ -47,6 +47,8 @@ router.post('/', imgs, async (req, res) => {
         const urlImgBack = await postImgs('back');
         const imgList = [{urlImgFront},{urlImgBack}];
 
+        console.log('7');
+
         const auxObj = {id:objGenerator.next().value, name,description, price, discount, imgList, country}
         products.push(auxObj);
         
