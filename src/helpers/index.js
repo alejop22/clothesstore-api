@@ -16,9 +16,9 @@ module.exports = {
 
         const processedImg = await resizeImg.toBuffer();
         if (imgType === 'front') {
-            fs.writeFileSync('assets/frontImg.jpg', processedImg);
+            fs.writeFileSync('frontImg.jpg', processedImg);
         } else {
-            fs.writeFileSync('assets/backImg.jpg', processedImg);
+            fs.writeFileSync('backImg.jpg', processedImg);
         }
     },
 
@@ -29,13 +29,13 @@ module.exports = {
 
         if (imgType === 'front') {
             try {
-                formData.append('file', fs.createReadStream('assets/frontImg.jpg'));
+                formData.append('file', fs.createReadStream('frontImg.jpg'));
             } catch (error) {
                 throw error
             }
         } else {
             try {
-                formData.append('file', fs.createReadStream('assets/backImg.jpg'));
+                formData.append('file', fs.createReadStream('backImg.jpg'));
             } catch (error) {
                 throw error
             }
@@ -70,12 +70,12 @@ module.exports = {
     },
 
     removeImgs: () => {
-        const files = ['assets/frontImg.jpg','assets/backImg.jpg'];
+        const files = ['frontImg.jpg','backImg.jpg'];
 
         for (const i of files) {
             try {
                 fs.unlinkSync(i)
-                console.log('Se elimono la imagen');
+                console.log('Se elimino la imagen');
             } catch (error) {
                 console.log(`Algo salio mal ${error}`)
             }

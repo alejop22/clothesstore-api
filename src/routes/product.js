@@ -38,12 +38,12 @@ router.post('/', imgs, async (req, res) => {
         if (img_front[0].size >= 1000000) {
             await processImgs(img_front[0].buffer, 'front')
         } else {
-            fs.writeFileSync('assets/frontImg.jpg', img_front[0].buffer);
+            fs.writeFileSync('frontImg.jpg', img_front[0].buffer);
         }
         if (img_back[0].size >= 1000000) {
             await processImgs(img_back[0].buffer, 'back')
         } else {
-            fs.writeFileSync('assets/backImg.jpg', img_back[0].buffer);
+            fs.writeFileSync('backImg.jpg', img_back[0].buffer);
         }
 
         const urlImgFront = await postImgs('front');
