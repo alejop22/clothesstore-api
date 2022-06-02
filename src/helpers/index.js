@@ -18,7 +18,7 @@ module.exports = {
         if (imgType === 'front') {
             fs.writeFileSync('assets/frontImg.jpg', processedImg);
         } else {
-            fs.writeFileSync('assets/frontImg.jpg', processedImg);
+            fs.writeFileSync('assets/backImg.jpg', processedImg);
         }
     },
 
@@ -28,9 +28,17 @@ module.exports = {
         formData.append('upload_preset', CLOUD_PRESET);
 
         if (imgType === 'front') {
-            formData.append('file', fs.createReadStream('assets/frontImg.jpg'));
+            try {
+                formData.append('file', fs.createReadStream('assets/frontImg.jpg'));
+            } catch (error) {
+                throw error
+            }
         } else {
-            formData.append('file', fs.createReadStream('assets/backImg.jpg'));
+            try {
+                formData.append('file', fs.createReadStream('assets/backImg.jpg'));
+            } catch (error) {
+                throw error
+            }
         }
 
         const config = {
