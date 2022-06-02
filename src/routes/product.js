@@ -14,8 +14,6 @@ router.post('/', imgs, async (req, res) => {
     let {name, description, price, discount, country} = req.body;
     const {img_front, img_back} = req.files;
 
-    
-
     try {
         if (!name || !description || !price || !discount || !country || !img_front || !img_back) {
             throw {error: 'Peticion invalida, faltan datos'}
@@ -33,15 +31,18 @@ router.post('/', imgs, async (req, res) => {
         if (img_front[0].size >= 1000000) {
             processImgs(img_front[0].buffer, 'front')
         } else {
+            console.log('log 1');
             fs.writeFileSync('assets/frontImg.jpg', img_front[0].buffer);
         }
 
         if (img_back[0].size >= 1000000) {
             processImgs(img_back[0].buffer, 'back')
         } else {
+            console.log('log 2');
             fs.writeFileSync('assets/backImg.jpg', img_back[0].buffer);
         }
         
+        console.log('log 3');
         const urlImgFront = await postImgs('front');
         const urlImgBack = await postImgs('back');
         const imgList = [{urlImgFront},{urlImgBack}];
