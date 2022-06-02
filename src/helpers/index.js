@@ -75,7 +75,7 @@ module.exports = {
         for (const i of files) {
             try {
                 fs.unlinkSync(i)
-                console.log('Se elimono la imagen');
+                console.log('Se elimino la imagen');
             } catch (error) {
                 console.log(`Algo salio mal ${error}`)
             }
