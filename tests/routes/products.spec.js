@@ -18,14 +18,14 @@ describe('Ruta de inicio', () => {
 describe('Ruta GET productos favoritos', () => {
     it('Deberia responder OK', () => {
         api
-            .get('/product')
+            .get('/products/favs')
             .expect(200)
             .expect('Content-Type', 'application/json')
     });
 
     it('Deberia responder un JSON con el error por lo que no hay productos',async () => {
         const rs = await supertest(server)
-            .get('/product')
+            .get('/products/favs')
             expect(rs.status).equal(404);
             expect(rs.body).contains({error: 'No hay ningun producto en favoritos'});
     });

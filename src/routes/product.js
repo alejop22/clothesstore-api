@@ -8,35 +8,6 @@ const { processImgs, postImgs, idGenerator } = require('../helpers');
 const uploadImgs = multer({storage: multer.memoryStorage()});
 const objGenerator = idGenerator();
 
-// Esta ruta permite obtener los productos
-router.get('/', (req, res) => {
-    try {
-        if (products.length === 0) {
-            throw {error: 'No hay ningun producto en favoritos'}
-        }
-
-        const favProducts = [];
-
-        for (const i of products) {
-            const auxObj = {
-                id: i.id,
-                name: i.name,
-                price: i.price, 
-                priceDisc: i.price - (i.discount/100)*i.price,
-                discount: i.discount+'%',
-                imgFront: i.imgList[0].urlImgFront,
-                imgBack: i.imgList[1].urlImgBack,
-            }
-
-            favProducts.push(auxObj)
-        }
-
-        res.json(favProducts);
-    } catch (error) {
-        res.status(404).json(error)
-    }
-});
-
 // Esta ruta permite la creacion de productos junto con el envio de las imagenes
 const imgs = uploadImgs.fields([{name: 'img_front', maxCount: 1}, {name: 'img_back', maxCount: 1}]);
 router.post('/', imgs, async (req, res) => {
@@ -81,6 +52,5 @@ router.post('/', imgs, async (req, res) => {
         res.status(400).json(error);
     }
 });
-
 
 module.exports = router;
