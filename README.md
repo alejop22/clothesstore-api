@@ -1,6 +1,7 @@
 # Clothesstore API
 ----
-API para la compañía ficticia Clothesstore
+API para la compañía ficticia Clothesstore.
+Hecha en node con express para exponer los endpoints, junto con la librería multer para recibir las imágenes y sharp para la reescalación de las mismas; también se usa supertest, chai y mocha para los test unitarios. Desplegada en Heroku.
 
 ### instructuvo para correr el proyecto:
 
