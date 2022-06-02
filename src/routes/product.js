@@ -14,14 +14,17 @@ router.post('/', imgs, async (req, res) => {
     let {name, description, price, discount, country} = req.body;
     const {img_front, img_back} = req.files;
 
-    country = country.charAt(0).toUpperCase() + country.slice(1);
-    price = price*1;
-    discount = discount*1;
+    
 
     try {
         if (!name || !description || !price || !discount || !country || !img_front || !img_back) {
             throw {error: 'Peticion invalida, faltan datos'}
-        } else if (discount > 50 && country === 'Colombia' || country === 'Mexico') {
+        }
+            country = country.charAt(0).toUpperCase() + country.slice(1);
+            price = price*1;
+            discount = discount*1;
+
+        if (discount > 50 && country === 'Colombia' || country === 'Mexico') {
             throw {error: 'Peticion invalida, descuento demasiado alto para el país'}
         } else if (discount > 30 && country === 'Chile' || country === 'Peru') {
             throw {error: 'Peticion invalida, descuento demasiado alto para el país'}
