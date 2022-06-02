@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const products = require('./routes/products.js');
 const product = require('./routes/product.js');
 
@@ -6,6 +7,7 @@ const server = express();
 const router = express.Router();
 
 server.use(express.json());
+server.use(cors());
 server.use(router);
 server.use('/products/favs', products);
 server.use('/product', product);
